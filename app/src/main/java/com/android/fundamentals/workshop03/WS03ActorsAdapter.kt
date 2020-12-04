@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 //TODO 2: make listener constructor parameter
-class WS03ActorsAdapter: RecyclerView.Adapter<ActorsViewHolder>() {
+class WS03ActorsAdapter(val myClickListener: MyClickListener): RecyclerView.Adapter<ActorsViewHolder>() {
 
     private var actors = listOf<Actor>()
 
@@ -42,6 +42,9 @@ class WS03ActorsAdapter: RecyclerView.Adapter<ActorsViewHolder>() {
             is DataViewHolder -> {
                 holder.onBind(actors[position])
                 //TODO 3: set onClick listener to binded view
+                holder.itemView.setOnClickListener{
+                    myClickListener.onClick(actors[position])
+                }
             }
             is EmptyViewHolder -> { /* nothing to bind */ }
         }
@@ -58,6 +61,7 @@ class WS03ActorsAdapter: RecyclerView.Adapter<ActorsViewHolder>() {
 abstract class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 private class EmptyViewHolder(itemView: View) : ActorsViewHolder(itemView)
+
 private class DataViewHolder(itemView: View) : ActorsViewHolder(itemView) {
 
     private val avatar: ImageView = itemView.findViewById(R.id.iv_actor_avatar)
@@ -95,3 +99,6 @@ private const val VIEW_TYPE_ACTORS = 1
 /*TODO 1: create interface of clickListener with method
          fun onClick(actor: Actor)
 */
+interface MyClickListener {
+    fun onClick(actor: Actor)
+}

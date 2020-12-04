@@ -60,7 +60,7 @@ private class DataViewHolder(itemView: View) : ActorsViewHolder(itemView) {
         Glide.with(context)
             .load(actor.avatar)
             .apply(options)
-            .into(avatar)
+            .into(avatar!!)
 
         name?.text = actor.name
 
